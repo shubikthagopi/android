@@ -1,0 +1,15 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="MyAccounts.Mobile.ReportsPage"
+             Title="Reports">
+    <StackLayout Padding="10">
+        <Label Text="Current Sales:"/>
+        <Label x:Name="SalesTotalLabel"/>
+        <Label Text="Payment Out:"/>
+        <Label x:Name="PaymentsTotalLabel"/>
+        <Label Text="Bank Deposits:"/>
+        <Label x:Name="BankTotalLabel"/>
+        <Label Text="Net Amount:" FontAttributes="Bold"/>
+        <Label x:Name="NetAmountLabel" FontAttributes="Bold"/>
+        <Button Text="Refresh Report" Clicked="OnRefreshReport"/>
+    </StackLayout>
+</ContentPage>

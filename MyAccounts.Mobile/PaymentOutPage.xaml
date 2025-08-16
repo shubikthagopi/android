@@ -1,0 +1,24 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="MyAccounts.Mobile.PaymentOutPage"
+             Title="Payment Out">
+    <StackLayout Padding="10">
+        <DatePicker x:Name="PayDatePicker"/>
+        <Entry x:Name="SupplierEntry" Placeholder="Supplier"/>
+        <Picker x:Name="ModePicker">
+            <Picker.Items>
+                <x:String>Cash</x:String>
+                <x:String>GPay</x:String>
+                <x:String>Cheque</x:String>
+            </Picker.Items>
+        </Picker>
+        <Entry x:Name="PayAmountEntry" Placeholder="Amount" Keyboard="Numeric"/>
+        <Button Text="Save Payment" Clicked="OnSavePayment"/>
+        <ListView x:Name="PaymentsList" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Supplier}" Detail="{Binding Amount}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

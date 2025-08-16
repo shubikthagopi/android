@@ -1,0 +1,16 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="MyAccounts.Mobile.SalesPage"
+             Title="Sales">
+    <StackLayout Padding="10">
+        <DatePicker x:Name="SaleDatePicker"/>
+        <Entry x:Name="SaleAmountEntry" Placeholder="Amount" Keyboard="Numeric"/>
+        <Button Text="Save Sale" Clicked="OnSaveSale"/>
+        <ListView x:Name="SalesList" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding SaleDate}" Detail="{Binding Amount}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
