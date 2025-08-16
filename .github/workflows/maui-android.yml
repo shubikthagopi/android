@@ -1,34 +1,42 @@
 name: Build MAUI Android APK
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Install MAUI workloads
-      run: dotnet workload install maui maui-android --ignore-failed-sources
+      - name: Install MAUI workloads
+        run: dotnet workload install maui maui-android
 
-    - name: Restore dependencies
-      run: dotnet restore MyAccounts.Mobile.vbproj
+      # Restore with auto-detect
+      - name: Restore dependencies
+        run: dotnet restore ./MyAccounts.Mobile/MyAccounts.Mobile.vbproj
+        # ❗ If your project is in repo root, change above line to:
+        # run: dotnet restore ./MyAccounts.Mobile.vbproj
 
-    - name: Build MAUI Android
-      run: dotnet publish MyAccounts.Mobile.vbproj -f net8.0-android -c Release
+      - name: Build MAUI Android
+        run: dotnet build ./MyAccounts.Mobile/MyAccounts.Mobile.vbproj -c Release -f net8.0-android
+        # ❗ If root project: change to ./MyAccounts.Mobile.vbproj
 
-    - name: Upload APK artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: MyAccounts-APK
-        path: bin/Release/net8.0-android/publish/*.apk
+      - name: Publish Android APK
+        run: dotnet publish ./MyAccounts.Mobile/MyAccounts.Mobile.vbproj -c Release -f net8.0-android -o ./output /p:GeneratePackageOnBuild=false /p:AndroidPackageFormat=apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyAccounts-APK
+          path: ./output/*.apk
